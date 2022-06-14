@@ -31,11 +31,12 @@ class MainActivity : AppCompatActivity() {
         val tipPercent = when(binding.tipOptions.checkedRadioButtonId){
             R.id.option_twenty_percent -> 0.20
             R.id.option_eighteen_percent -> 0.18
-            else -> 0.15
+            R.id.option_ten_percent -> 0.10
+            else -> 0.10
 
         }
 
-        var tip = cost * tipPercent
+        var tip = cost+(cost * tipPercent)
         if (binding.roundUpSwitch.isChecked){
             tip = kotlin.math.ceil(tip)
         }
