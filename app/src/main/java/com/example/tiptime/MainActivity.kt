@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.tiptime.databinding.ActivityMainBinding
 import java.text.NumberFormat
+import kotlin.math.ceil
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun calculateTip(){
 
-        val stringInTextField = binding.costOfService.text.toString()
+        val stringInTextField = binding.costOfServiceEditText.text.toString()
         val cost = stringInTextField.toDoubleOrNull()
         if (cost == null || cost == 0.0){
 
@@ -31,14 +32,14 @@ class MainActivity : AppCompatActivity() {
         val tipPercent = when(binding.tipOptions.checkedRadioButtonId){
             R.id.option_twenty_percent -> 0.20
             R.id.option_eighteen_percent -> 0.18
-            R.id.option_ten_percent -> 0.10
+            R.id.option_fifteen_percent -> 0.15
             else -> 0.10
 
         }
 
         var tip = cost+(cost * tipPercent)
         if (binding.roundUpSwitch.isChecked){
-            tip = kotlin.math.ceil(tip)
+            tip = ceil(tip)
         }
 
         displayTip(tip)
