@@ -19,22 +19,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.calculateButton.setOnClickListener{calculateTip()}
-        binding.costOfServiceEditText.setOnKeyListener{view, keyCode, _ -> handleKeyEvent(view, keyCode) }
+        binding.calculateButton.setOnClickListener { calculateTip() }
+        binding.costOfServiceEditText.setOnKeyListener { view, keyCode, _ ->
+            handleKeyEvent(
+                view,
+                keyCode
+            )
+        }
 
     }
-    private fun calculateTip(){
+
+    private fun calculateTip() {
 
         val stringInTextField = binding.costOfServiceEditText.text.toString()
         val cost = stringInTextField.toDoubleOrNull()
-        if (cost == null || cost == 0.0){
+        if (cost == null || cost == 0.0) {
 
             displayTip(0.0)
             return
 
         }
 
-        val tipPercent = when(binding.tipOptions.checkedRadioButtonId){
+        val tipPercent = when (binding.tipOptions.checkedRadioButtonId) {
             R.id.option_twenty_percent -> 0.20
             R.id.option_eighteen_percent -> 0.18
             R.id.option_fifteen_percent -> 0.15
@@ -42,18 +48,20 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        var tip = cost+(cost * tipPercent)
-        if (binding.roundUpSwitch.isChecked){
+        var tip = cost + (cost * tipPercent)
+        if (binding.roundUpSwitch.isChecked) {
             tip = ceil(tip)
         }
 
         displayTip(tip)
 
     }
-    private fun displayTip(tip : Double) {
+
+    private fun displayTip(tip: Double) {
         val formattedTip = NumberFormat.getCurrencyInstance().format(tip)
         binding.tipResult.text = getString(R.string.tip_amount, formattedTip)
     }
+
     private fun handleKeyEvent(view: View, keyCode: Int): Boolean {
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             // Hide the keyboard
